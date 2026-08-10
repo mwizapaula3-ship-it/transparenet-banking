@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RiskPill, ScoreBar } from "./RiskPill";
+import { scoreTransaction } from "@/lib/fraud.functions";
 import {
   assess,
   generateTransaction,
@@ -20,17 +23,37 @@ export function LiveFeed() {
   const [running, setRunning] = useState(true);
   const [selected, setSelected] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const score = useServerFn(scoreTransaction);
+  const qc = useQueryClient();
 
   useEffect(() => {
     if (!running) return;
     timer.current = setInterval(() => {
-      const tx = generateTransaction();
+      const { timestamp: _ts, ...payload } = generateTransaction();
+      const tx = { ...payload, timestamp: _ts } as Transaction;
       setRows((prev) => [{ tx, result: assess(tx) }, ...prev].slice(0, 25));
+      // Persist through the backend: it re-scores server-side and opens an alert.
+      void score({ data: payload })
+        .then((res) => {
+          setRows((prev) =>
+            prev.map((r) =>
+              r.tx.id === tx.id
+                ? { tx: r.tx, result: { score: res.score, decision: res.decision, reasons: res.reasons } }
+                : r,
+            ),
+          );
+          if (res.decision !== "approve") {
+            void qc.invalidateQueries({ queryKey: ["fraud-alerts"] });
+          }
+        })
+        .catch(() => {
+          /* keep the client-side score if the backend is unreachable */
+        });
     }, 2200);
     return () => {
       if (timer.current) clearInterval(timer.current);
     };
-  }, [running]);
+  }, [running, score, qc]);
 
   const stats = useMemo(() => {
     const blocked = rows.filter((r) => r.result.decision === "block").length;
