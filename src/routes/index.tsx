@@ -53,18 +53,82 @@ const TECHNIQUES = [
   },
 ];
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="min-h-screen bg-background">
+      <header className="border-b border-border">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            Financial crime · Machine learning
+          </p>
+          <h1 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight sm:text-4xl">
+            How AI detects fraud in banking transactions
+          </h1>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            Fraud models learn what normal looks like for each customer, then score every payment
+            against that baseline in milliseconds. Below is a working scoring engine: watch it
+            triage a live stream, then move the dials yourself.
+          </p>
+        </div>
+      </header>
+
+      <section className="mx-auto max-w-6xl px-4 py-10" aria-labelledby="feed-heading">
+        <h2 id="feed-heading" className="sr-only">
+          Live scoring demo
+        </h2>
+        <LiveFeed />
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-10" aria-labelledby="sim-heading">
+        <h2 id="sim-heading" className="sr-only">
+          Interactive risk simulator
+        </h2>
+        <Simulator />
+      </section>
+
+      <section className="border-t border-border" aria-labelledby="tech-heading">
+        <div className="mx-auto max-w-6xl px-4 py-12">
+          <h2 id="tech-heading" className="text-2xl font-semibold tracking-tight">
+            The techniques behind the score
+          </h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TECHNIQUES.map((t) => (
+              <article key={t.name} className="rounded-xl border border-border p-5">
+                <h3 className="text-sm font-semibold">{t.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t.body}</p>
+                <p className="mt-3 border-l-2 border-border pl-3 text-xs italic text-muted-foreground">
+                  {t.example}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-10 rounded-xl border border-border bg-muted/40 p-6">
+            <h3 className="text-sm font-semibold">Where it gets hard</h3>
+            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground">
+              <li>
+                Fraud is rare — often under 0.1% of transactions — so models must handle extreme
+                class imbalance without drowning analysts in false positives.
+              </li>
+              <li>
+                Attack patterns drift weekly, so models are retrained continuously and monitored for
+                decay.
+              </li>
+              <li>
+                Declines have real cost: blocking a genuine customer's card is its own failure,
+                which is why review queues and step-up authentication sit between approve and block.
+              </li>
+              <li>
+                Fairness and auditability are regulated — every automated decision needs reasons a
+                human can defend.
+              </li>
+            </ul>
+          </div>
+          <p className="mt-6 text-xs text-muted-foreground">
+            All data on this page is synthetic and generated in your browser for demonstration.
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }
