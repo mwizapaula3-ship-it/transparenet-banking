@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LiveFeed } from "@/components/fraud/LiveFeed";
 import { Simulator } from "@/components/fraud/Simulator";
+import { AlertQueue } from "@/components/fraud/AlertQueue";
 
 const title = "AI Fraud Detection for Banking Transactions";
 const description =
@@ -80,6 +81,13 @@ function Index() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pb-10" aria-labelledby="sim-heading">
+        <h2 id="queue-heading" className="sr-only">
+          Analyst alert queue
+        </h2>
+        <AlertQueue />
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-10" aria-labelledby="sim-heading">
         <h2 id="sim-heading" className="sr-only">
           Interactive risk simulator
         </h2>
@@ -125,7 +133,8 @@ function Index() {
             </ul>
           </div>
           <p className="mt-6 text-xs text-muted-foreground">
-            All data on this page is synthetic and generated in your browser for demonstration.
+            All data on this page is synthetic. Transactions are scored and stored by the backend,
+            and every flagged payment creates an alert with a full audit trail.
           </p>
         </div>
       </section>
