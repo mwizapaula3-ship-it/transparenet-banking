@@ -80,7 +80,7 @@ function Index() {
         <LiveFeed />
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 pb-10" aria-labelledby="sim-heading">
+      <section className="mx-auto max-w-6xl px-4 pb-10" aria-labelledby="queue-heading">
         <h2 id="queue-heading" className="sr-only">
           Analyst alert queue
         </h2>
