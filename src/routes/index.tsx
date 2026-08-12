@@ -69,7 +69,7 @@ function Index() {
           height={1008}
           className="absolute inset-0 size-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
         <div
           className="absolute inset-0 opacity-40"
           style={{ background: "var(--gradient-hero)", mixBlendMode: "overlay" }}
