@@ -144,6 +144,28 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+:root {
+  --brand: oklch(0.62 0.16 205);
+  --brand-glow: oklch(0.7 0.17 285);
+  --gradient-hero: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand) 85%, transparent),
+    color-mix(in oklab, var(--brand-glow) 85%, transparent)
+  );
+  --shadow-elegant: 0 24px 60px -24px color-mix(in oklab, var(--brand) 45%, transparent);
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-glow: var(--brand-glow);
+}
+
+@utility hero-gradient-text {
+  background-image: var(--gradient-hero);
+  background-clip: text;
+  color: transparent;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
