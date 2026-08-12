@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RiskPill, ScoreBar } from "./RiskPill";
+import { BlockedExplained } from "./BlockedExplained";
 import { scoreTransaction } from "@/lib/fraud.functions";
 import {
   assess,
@@ -67,6 +68,7 @@ export function LiveFeed() {
   const active = rows.find((r) => r.tx.id === selected) ?? rows[0];
 
   return (
+    <div className="space-y-4">
     <div className="grid gap-4 lg:grid-cols-5">
       <Card className="lg:col-span-3">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0">
@@ -172,6 +174,8 @@ export function LiveFeed() {
           ) : null}
         </CardContent>
       </Card>
+    </div>
+    <BlockedExplained rows={rows} />
     </div>
   );
 }
