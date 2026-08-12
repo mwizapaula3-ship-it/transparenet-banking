@@ -1,4 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Activity, ShieldCheck, Gauge, ScrollText } from "lucide-react";
+import heroImage from "@/assets/hero-fraud.jpg";
+import shieldImage from "@/assets/shield-signals.jpg";
+import { Button } from "@/components/ui/button";
 import { LiveFeed } from "@/components/fraud/LiveFeed";
 import { Simulator } from "@/components/fraud/Simulator";
 import { AlertQueue } from "@/components/fraud/AlertQueue";
